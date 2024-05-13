@@ -1,0 +1,97 @@
+import tkinter as tk
+
+class Book:
+    def __init__(self, title, author, price_inr):
+        self.title = title
+        self.author = author
+        self.price_inr = price_inr
+
+class BookShop:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+
+    def buy_books(self, selections):
+        total_bill = 0
+        for choice, quantity in selections.items():
+            selected_book = self.books[choice]
+            total_bill += selected_book.price_inr * quantity
+        return total_bill
+
+def buy_books_window(bookshop):
+    def buy():
+        selections = {}
+        for i, var in enumerate(vars):
+            if var.get() > 0:
+                selections[i] = var.get()
+        total_bill = bookshop.buy_books(selections)
+        total_label.config(text=f"Total Bill: ₹{total_bill:.2f}")
+
+    root = tk.Tk()
+    root.title("Bookshop")
+
+    def login():
+        if username_entry.get() == "JEVITHESH" and password_entry.get() == "123":
+            login_frame.grid_forget()
+            main_frame.grid(row=1, column=0, padx=20)
+        else:
+            invalid_label.grid(row=2, column=0)
+
+    # Login Frame
+    login_frame = tk.Frame(root)
+    login_frame.grid(row=0, column=0, padx=20)
+
+    # Login Labels and Entries
+    tk.Label(login_frame, text="Username:").grid(row=0, column=0, pady=5)
+    username_entry = tk.Entry(login_frame)
+    username_entry.grid(row=0, column=1, pady=5)
+    tk.Label(login_frame, text="Password:").grid(row=1, column=0, pady=5)
+    password_entry = tk.Entry(login_frame, show="*")
+    password_entry.grid(row=1, column=1, pady=5)
+    login_button = tk.Button(login_frame, text="Login", command=login)
+    login_button.grid(row=2, column=0, columnspan=2, pady=5)
+    invalid_label = tk.Label(login_frame, text="Invalid username or password", fg="red")
+
+    # Main Frame for Books
+    main_frame = tk.Frame(root)
+
+    # Title Label
+    title_label = tk.Label(main_frame, text="Welcome to Bookshop", font=("Helvetica", 16, "bold"))
+    title_label.grid(row=0, column=0, columnspan=2, pady=10)
+
+    # Frame for Books
+    books_frame = tk.Frame(main_frame)
+    books_frame.grid(row=1, column=0, padx=20)
+
+    # Labels for Books
+    for i, book in enumerate(bookshop.books):
+        tk.Label(books_frame, text=f"{book.title} by {book.author} (₹{book.price_inr})", font=("Helvetica", 12)).grid(row=i, column=0, sticky="w")
+        var = tk.IntVar()
+        tk.Entry(books_frame, textvariable=var, width=5).grid(row=i, column=1, padx=10)
+        vars.append(var)
+
+    # Buy Button
+    buy_button = tk.Button(main_frame, text="Buy", command=buy, font=("Helvetica", 12, "bold"))
+    buy_button.grid(row=2, column=0, columnspan=2, pady=20)
+
+    # Total Bill Label
+    total_label = tk.Label(main_frame, text="", font=("Helvetica", 14))
+    total_label.grid(row=3, column=0, columnspan=2)
+    root.geometry("500x500")
+    root.mainloop()
+
+def main():
+    bookshop = BookShop()
+
+    # Adding books to the shop
+    bookshop.add_book(Book("Python Programming", "John Smith", 150))
+    bookshop.add_book(Book("Data Structures and Algorithms", "Alice Johnson", 180))
+    bookshop.add_book(Book("Machine Learning Basics", "David Miller", 250))
+
+    buy_books_window(bookshop)
+
+if __name__ == "__main__":
+    vars = []  # List to store IntVars for quantity entries
+    main()

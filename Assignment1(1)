@@ -1,0 +1,43 @@
+#1st program
+a=input()
+l=len(a)
+b=a[0]+a[l//2]+a[-1]
+print(b)
+
+#2nd program
+print(a[(l//2)-1]+a[l//2]+a[(l//2)+1])
+
+#3rd program
+str1=input()
+str2=input()
+l=len(str1)
+print(str1[:l//2:1]+str2+str1[l//2:l])
+! 
+
+#4th program
+st1=input()
+st2=input()
+l1=len(st1)
+l2=len(st2)
+print(st1[0]+st2[0]+st1[l1//2]+st2[l2//2]+st1[-1]+st2[-1])
+
+#5th program
+str1=input()
+str2=input()
+str3=str1+str2
+print(str3[::-1])
+
+#6th program
+st=input()
+c,d,s=0,0,0
+for i in st:
+    if(i.isdigit()):
+        d=d+1
+    elif(i.isalpha()):
+        c=c+1
+    else:
+        s=s+1
+print("The total number of character is ",len(st))
+print("char :",c,"\ndigits :",d,"\nsymbols :",s)
+
+
